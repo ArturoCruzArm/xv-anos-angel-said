@@ -1,0 +1,423 @@
+/* ===================================
+   CONTRATO STYLES
+   =================================== */
+:root {
+    --azul-oscuro: #1a2332;
+    --azul-medio: #2c3e50;
+    --gris-oscuro: #2d3748;
+    --dorado: #f6ad55;
+    --blanco: #ffffff;
+    --gris-claro: #e2e8f0;
+    --verde: #48bb78;
+    --amarillo: #f6e05e;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, var(--azul-oscuro) 0%, var(--gris-oscuro) 100%);
+    color: var(--blanco);
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+/* ===================================
+   HEADER
+   =================================== */
+.contract-header {
+    background: linear-gradient(135deg, var(--azul-medio) 0%, var(--azul-oscuro) 100%);
+    padding: 40px 30px;
+    text-align: center;
+    border-bottom: 3px solid var(--dorado);
+}
+
+.contract-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--dorado);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.contract-header h2 {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--gris-claro);
+}
+
+/* ===================================
+   CONTENT
+   =================================== */
+.contract-content {
+    padding: 40px 30px;
+}
+
+.contract-section {
+    margin-bottom: 40px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
+    border: 1px solid rgba(246, 173, 85, 0.2);
+}
+
+.contract-section.highlight {
+    background: rgba(246, 173, 85, 0.1);
+    border: 2px solid var(--dorado);
+}
+
+.contract-section h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--dorado);
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--dorado);
+    padding-bottom: 10px;
+}
+
+/* ===================================
+   PARTY INFO
+   =================================== */
+.party-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.party {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(246, 173, 85, 0.3);
+}
+
+.party h4 {
+    font-size: 1.2rem;
+    color: var(--dorado);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.party p {
+    margin-bottom: 10px;
+    color: var(--gris-claro);
+}
+
+.party p strong {
+    color: var(--blanco);
+}
+
+/* ===================================
+   EVENT INFO
+   =================================== */
+.event-info p {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    color: var(--gris-claro);
+}
+
+.event-info p strong {
+    color: var(--dorado);
+    margin-right: 10px;
+}
+
+/* ===================================
+   PACKAGE INFO
+   =================================== */
+.package-info h4 {
+    font-size: 1.8rem;
+    color: var(--dorado);
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.package-subtitle {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.coverage-info {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.coverage-info p {
+    font-size: 1.2rem;
+    color: var(--blanco);
+}
+
+.coverage-info p strong {
+    color: var(--dorado);
+}
+
+.package-list {
+    list-style: none;
+    padding: 0;
+}
+
+.package-list li {
+    padding: 15px;
+    margin-bottom: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border-left: 4px solid var(--dorado);
+    font-size: 1.05rem;
+    transition: all 0.3s ease;
+}
+
+.package-list li:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.package-list li em {
+    color: var(--dorado);
+    font-style: normal;
+    font-weight: 600;
+}
+
+/* ===================================
+   PAYMENT INFO
+   =================================== */
+.payment-table {
+    width: 100%;
+    margin-bottom: 30px;
+    border-collapse: collapse;
+}
+
+.payment-table tr {
+    border-bottom: 1px solid rgba(246, 173, 85, 0.3);
+}
+
+.payment-table td {
+    padding: 15px;
+    font-size: 1.1rem;
+}
+
+.payment-table .total-row {
+    border-bottom: 3px solid var(--dorado);
+    background: rgba(246, 173, 85, 0.1);
+}
+
+.payment-table .total-row td {
+    font-size: 1.5rem;
+    color: var(--dorado);
+}
+
+.payment-table .amount {
+    text-align: right;
+    font-size: 2rem;
+}
+
+.payment-schedule h4 {
+    font-size: 1.3rem;
+    color: var(--dorado);
+    margin-bottom: 20px;
+}
+
+.payment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(246, 173, 85, 0.2);
+}
+
+.payment-item p {
+    margin: 0;
+}
+
+.payment-status {
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.payment-status.paid {
+    background: var(--verde);
+    color: var(--blanco);
+}
+
+.payment-status.pending {
+    background: var(--amarillo);
+    color: var(--azul-oscuro);
+}
+
+/* ===================================
+   TERMS
+   =================================== */
+.terms ol {
+    padding-left: 25px;
+}
+
+.terms li {
+    margin-bottom: 15px;
+    color: var(--gris-claro);
+    line-height: 1.8;
+}
+
+/* ===================================
+   SIGNATURES
+   =================================== */
+.signatures {
+    margin-top: 50px;
+}
+
+.signatures h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--dorado);
+    margin-bottom: 20px;
+}
+
+.signature-date {
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--gris-claro);
+    font-size: 1.1rem;
+}
+
+.signature-boxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.signature-box {
+    text-align: center;
+}
+
+.signature-line {
+    border-bottom: 2px solid var(--dorado);
+    margin-bottom: 15px;
+    min-height: 60px;
+}
+
+.signature-box p {
+    margin: 5px 0;
+    color: var(--gris-claro);
+}
+
+.signature-box p strong {
+    color: var(--blanco);
+    font-size: 1.1rem;
+}
+
+/* ===================================
+   BACK BUTTON
+   =================================== */
+.back-button-container {
+    padding: 30px;
+    text-align: center;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 15px 40px;
+    background: transparent;
+    border: 2px solid var(--dorado);
+    color: var(--dorado);
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background: var(--dorado);
+    color: var(--azul-oscuro);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(246, 173, 85, 0.4);
+}
+
+/* ===================================
+   FOOTER
+   =================================== */
+.contract-footer {
+    background: var(--azul-oscuro);
+    padding: 30px;
+    text-align: center;
+    color: var(--gris-claro);
+    font-size: 0.9rem;
+}
+
+.contract-footer p {
+    margin: 5px 0;
+}
+
+/* ===================================
+   RESPONSIVE
+   =================================== */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+
+    .back-button-container {
+        display: none;
+    }
+
+    .contract-section {
+        page-break-inside: avoid;
+    }
+}
+
+@media (max-width: 768px) {
+    .contract-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .contract-header h2 {
+        font-size: 1.1rem;
+    }
+
+    .contract-content {
+        padding: 20px 15px;
+    }
+
+    .contract-section {
+        padding: 20px 15px;
+    }
+
+    .party-info {
+        grid-template-columns: 1fr;
+    }
+
+    .payment-item {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .signature-boxes {
+        grid-template-columns: 1fr;
+    }
+}
