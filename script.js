@@ -1,4 +1,68 @@
 // ===================================
+// MÚSICA DE FONDO
+// ===================================
+function initMusic() {
+    const music = document.getElementById('background-music');
+    const musicToggle = document.getElementById('music-toggle');
+    const musicIcon = document.getElementById('music-icon');
+
+    if (!music || !musicToggle || !musicIcon) {
+        return;
+    }
+
+    let isPlaying = false;
+    let hasInteracted = false;
+
+    // Función para intentar reproducir música
+    function startMusic() {
+        if (!hasInteracted) {
+            const playPromise = music.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    isPlaying = true;
+                    musicIcon.className = 'fas fa-volume-up';
+                    hasInteracted = true;
+                }).catch(() => {
+                    isPlaying = false;
+                    musicIcon.className = 'fas fa-volume-mute';
+                });
+            }
+        }
+    }
+
+    // Intentar reproducir después de cualquier interacción
+    const events = ['click', 'touchstart', 'scroll'];
+    events.forEach(event => {
+        document.addEventListener(event, startMusic, { once: true });
+    });
+
+    // Toggle música
+    musicToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        hasInteracted = true;
+
+        if (isPlaying) {
+            music.pause();
+            musicIcon.className = 'fas fa-volume-mute';
+            isPlaying = false;
+        } else {
+            const playPromise = music.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    musicIcon.className = 'fas fa-volume-up';
+                    isPlaying = true;
+                }).catch(() => {
+                    console.log('No se pudo reproducir la música');
+                });
+            }
+        }
+    });
+
+    // Intentar reproducir al cargar
+    setTimeout(startMusic, 500);
+}
+
+// ===================================
 // CUENTA REGRESIVA
 // ===================================
 function initCountdown() {
@@ -103,6 +167,7 @@ function initScrollIndicator() {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('%c👑 XV Años - Angel Said 👑', 'font-size: 20px; color: #f6ad55; font-weight: bold;');
 
+    initMusic();
     initCountdown();
     initSmoothScroll();
     initScrollAnimations();
