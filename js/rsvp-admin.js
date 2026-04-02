@@ -108,7 +108,7 @@
     async function sendWhatsApp(id) {
         const g = guests.find(x => x.id === id);
         if (!g) return;
-        const link = `${BASE_URL}/index.html?inv=${g.token}`;
+        const link = `${BASE_URL}?inv=${g.token}`;
         const evName = cfg.eventName || 'el evento';
         const evDate = cfg.eventDate ? ` el ${cfg.eventDate}` : '';
         const msg  = `Hola ${g.nombre} 👑✨\n\nTe invitamos cordialmente a *${evName}*${evDate}.\n\nTu enlace de invitación personalizada:\n${link}\n\nPor favor confirma tu asistencia desde el enlace. Tienes *${g.pases_asignados} ${g.pases_asignados === 1 ? 'pase' : 'pases'}* asignados. 🎀`;
@@ -201,7 +201,7 @@
     async function copyLink(id) {
         const g = guests.find(x => x.id === id);
         if (!g) return;
-        const link = `${BASE_URL}/index.html?inv=${g.token}`;
+        const link = `${BASE_URL}?inv=${g.token}`;
         try {
             await navigator.clipboard.writeText(link);
             showToast('✓ Link copiado al portapapeles');
