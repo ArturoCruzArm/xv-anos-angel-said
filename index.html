@@ -96,29 +96,47 @@
         <div class="splash-glow"></div>
         <div class="splash-content">
             <span class="splash-icon">👑</span>
-            <p class="splash-subtitle">Estás invitado(a) a mis</p>
+            <p class="splash-subtitle" id="splashSubtitle">Estás invitado(a) a mis</p>
             <h1 class="splash-names">Ángel Said</h1>
             <div class="splash-divider"></div>
-            <p class="splash-date">12 de Septiembre, 2026</p>
+            <p class="splash-date" id="splashDate">12 de Septiembre, 2026</p>
+            <p id="splashGuest" style="display:none;font-family:'Playfair Display',serif;font-size:clamp(1.4rem,5vw,2.2rem);color:#fff;margin-bottom:.4rem;"></p>
+            <p id="splashPases" style="display:none;font-family:'Montserrat',sans-serif;font-size:.85rem;letter-spacing:.15em;color:rgba(246,173,85,.7);margin-bottom:1.2rem;"></p>
             <button class="splash-btn" id="openInvitation">Abrir Invitación</button>
             <p class="splash-hint">Toca para abrir</p>
         </div>
     </div>
     <script>
-        // Si viene con ?inv=TOKEN, saltar splash y ir directo al RSVP
-        if (new URLSearchParams(window.location.search).get('inv')) {
-            document.getElementById('splashScreen').classList.add('hidden');
-            document.addEventListener('DOMContentLoaded', function() {
-                setTimeout(function() {
-                    document.getElementById('rsvp')?.scrollIntoView({ behavior: 'smooth' });
-                }, 400);
-            });
+    (function(){
+        const SB_URL  = 'https://nzpujmlienzfetqcgsxz.supabase.co';
+        const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56cHVqbWxpZW56ZmV0cWNnc3h6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2ODYzMzYsImV4cCI6MjA5MDI2MjMzNn0.xl3lsb-KYj5tVLKTnzpbsdEGoV9ySnswH4eyRuyEH1s';
+        const token = new URLSearchParams(window.location.search).get('inv');
+
+        if (token) {
+            fetch(`${SB_URL}/rest/v1/invitados?token=eq.${token}&select=nombre,pases_asignados`,
+                { headers: { apikey: SB_ANON, Authorization: 'Bearer ' + SB_ANON } })
+            .then(r => r.json()).then(rows => {
+                if (!rows.length) return;
+                const g = rows[0];
+                document.getElementById('splashSubtitle').textContent = 'Hola,';
+                document.getElementById('splashDate').style.display = 'none';
+                const gEl = document.getElementById('splashGuest');
+                gEl.textContent = g.nombre;
+                gEl.style.display = 'block';
+                const pEl = document.getElementById('splashPases');
+                pEl.textContent = `🎟 ${g.pases_asignados} ${g.pases_asignados === 1 ? 'pase asignado' : 'pases asignados'}`;
+                pEl.style.display = 'block';
+                document.getElementById('openInvitation').textContent = 'Ver mi Invitación';
+            }).catch(()=>{});
         }
+
         document.getElementById('openInvitation').addEventListener('click', function() {
             document.getElementById('splashScreen').classList.add('hidden');
             const music = document.getElementById('background-music');
             if (music) { music.volume = 0.4; music.play().catch(()=>{}); document.getElementById('music-icon').className = 'fas fa-volume-up'; }
+            if (token) setTimeout(function(){ document.getElementById('rsvp')?.scrollIntoView({ behavior:'smooth' }); }, 600);
         });
+    })();
     </script>
 
     <!-- Música de fondo -->
