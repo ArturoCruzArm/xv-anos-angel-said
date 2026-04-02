@@ -15,8 +15,103 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .splash-screen {
+            position: fixed; inset: 0; z-index: 10000;
+            background: linear-gradient(160deg, #05080f 0%, #0d1a2e 50%, #0a0a0f 100%);
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity .9s ease, visibility .9s ease;
+            overflow: hidden;
+        }
+        .splash-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .splash-particles {
+            position: absolute; inset: 0; pointer-events: none;
+            background-image:
+                radial-gradient(circle, rgba(246,173,85,.15) 1px, transparent 1px),
+                radial-gradient(circle, rgba(246,173,85,.08) 1px, transparent 1px);
+            background-size: 60px 60px, 30px 30px;
+            background-position: 0 0, 15px 15px;
+            animation: particleDrift 20s linear infinite;
+        }
+        @keyframes particleDrift { from { transform: translateY(0); } to { transform: translateY(-60px); } }
+        .splash-glow {
+            position: absolute; width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(246,173,85,.08) 0%, transparent 70%);
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+        @keyframes glowPulse { 0%,100%{opacity:.6; transform:translate(-50%,-50%) scale(1);} 50%{opacity:1; transform:translate(-50%,-50%) scale(1.15);} }
+        .splash-content {
+            position: relative; text-align: center; padding: 2rem;
+            animation: splashReveal .8s ease both;
+        }
+        @keyframes splashReveal { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+        .splash-icon {
+            font-size: 3rem; display: block; margin-bottom: 1.2rem;
+            animation: splashFloat 3s ease-in-out infinite;
+        }
+        @keyframes splashFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+        .splash-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: .75rem; font-weight: 500; letter-spacing: .45em;
+            text-transform: uppercase; color: rgba(246,173,85,.55);
+            margin-bottom: .8rem;
+        }
+        .splash-names {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.6rem, 8vw, 4.5rem); font-weight: 700;
+            color: #f6ad55; line-height: 1.1; margin-bottom: .8rem;
+            text-shadow: 0 0 40px rgba(246,173,85,.3);
+        }
+        .splash-divider {
+            width: 100px; height: 1px; margin: 1rem auto;
+            background: linear-gradient(90deg, transparent, #f6ad55, transparent);
+        }
+        .splash-date {
+            font-family: 'Montserrat', sans-serif;
+            font-size: .85rem; letter-spacing: .2em;
+            color: rgba(255,255,255,.45); margin-bottom: 2.2rem;
+        }
+        .splash-btn {
+            display: inline-block; padding: 1rem 3rem;
+            background: transparent; border: 1.5px solid #f6ad55;
+            border-radius: 50px; color: #f6ad55;
+            font-family: 'Montserrat', sans-serif;
+            font-size: .9rem; font-weight: 600; letter-spacing: .15em;
+            cursor: pointer; transition: all .3s;
+            text-transform: uppercase;
+        }
+        .splash-btn:hover { background: #f6ad55; color: #05080f; transform: translateY(-3px); box-shadow: 0 8px 24px rgba(246,173,85,.35); }
+        .splash-hint {
+            font-family: 'Montserrat', sans-serif;
+            font-size: .7rem; color: rgba(255,255,255,.2);
+            margin-top: 1rem; letter-spacing: .1em;
+        }
+    </style>
 </head>
 <body>
+    <!-- Splash Screen -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-particles"></div>
+        <div class="splash-glow"></div>
+        <div class="splash-content">
+            <span class="splash-icon">👑</span>
+            <p class="splash-subtitle">Estás invitado(a) a mis</p>
+            <h1 class="splash-names">Ángel Said</h1>
+            <div class="splash-divider"></div>
+            <p class="splash-date">12 de Septiembre, 2026</p>
+            <button class="splash-btn" id="openInvitation">Abrir Invitación</button>
+            <p class="splash-hint">Toca para abrir</p>
+        </div>
+    </div>
+    <script>
+        document.getElementById('openInvitation').addEventListener('click', function() {
+            document.getElementById('splashScreen').classList.add('hidden');
+            const music = document.getElementById('background-music');
+            if (music) { music.volume = 0.4; music.play().catch(()=>{}); document.getElementById('music-icon').className = 'fas fa-volume-up'; }
+        });
+    </script>
+
     <!-- Música de fondo -->
     <audio id="background-music" loop>
         <source src="musica-fondo.mp3" type="audio/mpeg">
