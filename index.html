@@ -105,6 +105,15 @@
         </div>
     </div>
     <script>
+        // Si viene con ?inv=TOKEN, saltar splash y ir directo al RSVP
+        if (new URLSearchParams(window.location.search).get('inv')) {
+            document.getElementById('splashScreen').classList.add('hidden');
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(function() {
+                    document.getElementById('rsvp')?.scrollIntoView({ behavior: 'smooth' });
+                }, 400);
+            });
+        }
         document.getElementById('openInvitation').addEventListener('click', function() {
             document.getElementById('splashScreen').classList.add('hidden');
             const music = document.getElementById('background-music');
