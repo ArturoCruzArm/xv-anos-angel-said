@@ -58,7 +58,7 @@
                 <div class="parent-item">
                     <i class="fas fa-heart parent-icon"></i>
                     <h3>Mamá</h3>
-                    <p>Celia Guadalupe Anzueto Argüello</p>
+                    <p><span data-campo="madre-nombre">Celia Guadalupe Anzueto Argüello</span></p>
                 </div>
             </div>
         </div>
@@ -101,11 +101,11 @@
                 </div>
                 <h3 class="event-title">Misa de Acción de Gracias</h3>
                 <div class="event-details">
-                    <p class="event-time"><i class="fas fa-clock"></i> 2:00 PM</p>
-                    <p class="event-location"><i class="fas fa-map-marker-alt"></i> Templo Expiatorio</p>
-                    <p class="event-address">León, Guanajuato</p>
+                    <p class="event-time"><i class="fas fa-clock"></i> <span data-campo="ceremonia-hora">2:00 PM</span></p>
+                    <p class="event-location"><i class="fas fa-map-marker-alt"></i> <span data-campo="ceremonia-lugar">Templo Expiatorio</span></p>
+                    <p class="event-address" data-campo="ceremonia-direccion">León, Guanajuato</p>
                     <div class="event-buttons">
-                        <a href="https://www.google.com/maps/search/?api=1&query=Templo+Expiatorio+Leon+Guanajuato" target="_blank" class="btn btn-primary">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Templo+Expiatorio+Leon+Guanajuato" target="_blank" class="btn btn-primary" data-campo="ceremonia-maps">
                             <i class="fas fa-map-marked-alt"></i> Ver Mapa
                         </a>
                     </div>
@@ -119,11 +119,11 @@
                 </div>
                 <h3 class="event-title">Recepción</h3>
                 <div class="event-details">
-                    <p class="event-time"><i class="fas fa-clock"></i> 6:00 PM</p>
-                    <p class="event-location"><i class="fas fa-map-marker-alt"></i> Salones Santa Clara</p>
-                    <p class="event-address">León, Guanajuato</p>
+                    <p class="event-time"><i class="fas fa-clock"></i> <span data-campo="recepcion-hora">6:00 PM</span></p>
+                    <p class="event-location"><i class="fas fa-map-marker-alt"></i> <span data-campo="recepcion-lugar">Salones Santa Clara</span></p>
+                    <p class="event-address" data-campo="recepcion-direccion">León, Guanajuato</p>
                     <div class="event-buttons">
-                        <a href="https://www.google.com/maps/search/?api=1&query=Salones+Santa+Clara+Leon+Guanajuato" target="_blank" class="btn btn-primary">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Salones+Santa+Clara+Leon+Guanajuato" target="_blank" class="btn btn-primary" data-campo="recepcion-maps">
                             <i class="fas fa-map-marked-alt"></i> Ver Mapa
                         </a>
                     </div>
@@ -138,7 +138,7 @@
             <h2 class="section-title">CÓDIGO DE VESTIMENTA</h2>
             <div class="dress-code-content">
                 <i class="fas fa-user-tie dress-code-icon"></i>
-                <p class="dress-code-text">Formal</p>
+                <p class="dress-code-text" data-campo="vestimenta-tipo">Formal</p>
             </div>
         </div>
     </section>
@@ -152,6 +152,18 @@
                 <p>Tu presencia es mi mejor regalo</p>
                 <p class="gifts-subtitle">Pero si deseas obsequiarme algo:</p>
                 <h3>Lluvia de Sobres</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="section" id="gallery" style="padding: 60px 20px; background: #0a0a0a;">
+        <div class="container">
+            <h2 class="section-title">SESIÓN DE FOTOS</h2>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; max-width: 900px; margin: 0 auto;">
+                <img src="img/1.png" alt="Angel Said" style="width:100%; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,.5);">
+                <img src="img/2.png" alt="Angel Said" style="width:100%; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,.5);">
+                <img src="img/3.png" alt="Angel Said" style="width:100%; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,.5);">
             </div>
         </div>
     </section>
