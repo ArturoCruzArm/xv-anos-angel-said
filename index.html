@@ -118,6 +118,7 @@
             .then(r => r.json()).then(rows => {
                 if (!rows.length) return;
                 const g = rows[0];
+                document.querySelector('.splash-names').style.display = 'none';
                 document.getElementById('splashSubtitle').textContent = 'Hola,';
                 document.getElementById('splashDate').style.display = 'none';
                 const gEl = document.getElementById('splashGuest');
@@ -134,7 +135,7 @@
             document.getElementById('splashScreen').classList.add('hidden');
             const music = document.getElementById('background-music');
             if (music) { music.volume = 0.4; music.play().catch(()=>{}); document.getElementById('music-icon').className = 'fas fa-volume-up'; }
-            if (token) setTimeout(function(){ document.getElementById('rsvp')?.scrollIntoView({ behavior:'smooth' }); }, 600);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     })();
     </script>
