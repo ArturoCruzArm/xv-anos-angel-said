@@ -304,17 +304,14 @@
                 </div>
                 <div class="form-group">
                     <label for="guests" style="display:block;margin-bottom:6px;font-size:.9rem;opacity:.8;">Número de personas</label>
-                    <select id="guests" name="guests" required
-                        style="width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(30,20,50,.9);color:#fff;font-size:1rem;">
-                        <option value="">Selecciona</option>
-                        <option value="1">1 persona</option>
-                        <option value="2">2 personas</option>
-                        <option value="3">3 personas</option>
-                        <option value="4">4 personas</option>
-                        <option value="5">5 personas</option>
-                    </select>
+                    <input type="number" id="guests" name="guests" min="1" max="20" value="1" required>
                 </div>
-                <div class="form-group">
+                
+                    <div class="form-group" id="nombresGroup" style="display:none;">
+                        <label>Nombres de tus acompanantes</label>
+                        <div id="nombresContainer"></div>
+                    </div>
+<div class="form-group">
                     <label for="attendance" style="display:block;margin-bottom:6px;font-size:.9rem;opacity:.8;">¿Asistirás?</label>
                     <select id="attendance" name="attendance" required
                         style="width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(30,20,50,.9);color:#fff;font-size:1rem;">
@@ -353,5 +350,72 @@
     <script src="js/foro7-footer.js"></script>
     <script>window.EVENTO_SLUG='xv-anos-angel-said';</script>
     <script src="js/evento-loader.js"></script>
+    <script>
+    (function(){
+        const token = new URLSearchParams(window.location.search).get('inv');
+        if (token) return;
+        const SB_URL  = 'https://nzpujmlienzfetqcgsxz.supabase.co';
+        const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56cHVqbWxpZW56ZmV0cWNnc3h6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2ODYzMzYsImV4cCI6MjA5MDI2MjMzNn0.xl3lsb-KYj5tVLKTnzpbsdEGoV9ySnswH4eyRuyEH1s';
+        const SB_H    = { 'apikey': SB_ANON, 'Authorization': 'Bearer ' + SB_ANON, 'Content-Type': 'application/json' };
+        const SLUG    = 'xv-anos-angel-said';
+
+        function buildNombreInputs(count) {
+            var container = document.getElementById('nombresContainer');
+            var group = document.getElementById('nombresGroup');
+            if (!container || !group) return;
+            container.innerHTML = '';
+            var numAcomp = Math.max(0, count - 1);
+            group.style.display = numAcomp > 0 ? 'block' : 'none';
+            for (var i = 0; i < numAcomp; i++) {
+                var inp = document.createElement('input');
+                inp.type = 'text';
+                inp.className = 'nombre-asistente';
+                inp.placeholder = 'Acompanante ' + (i + 1);
+                inp.style.cssText = 'width:100%;padding:10px;margin-bottom:6px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:rgba(255,255,255,0.08);color:inherit;font-size:.95rem;';
+                container.appendChild(inp);
+            }
+        }
+
+        function attachHandler(){
+            const form = document.getElementById('rsvpForm');
+            if (!form) return;
+            var guestsInput = document.getElementById('guests');
+            if (guestsInput) {
+                guestsInput.addEventListener('change', function(){ buildNombreInputs(parseInt(this.value)||1); });
+                guestsInput.addEventListener('input', function(){ buildNombreInputs(parseInt(this.value)||1); });
+                buildNombreInputs(parseInt(guestsInput.value)||1);
+            }
+            form.addEventListener('submit', async function(e){
+                e.preventDefault();
+                const nombre  = (document.getElementById('name')?.value||'').trim();
+                const pases   = parseInt(document.getElementById('guests')?.value||'1');
+                const asiste  = document.getElementById('attendance')?.value === 'si';
+                const mensaje = (document.getElementById('message')?.value||'').trim();
+                const nombres = Array.from(document.querySelectorAll('.nombre-asistente')).map(inp => inp.value.trim()).filter(Boolean);
+                if (!nombre) return;
+                const btn = form.querySelector('button[type="submit"]');
+                if (btn){ btn.disabled=true; btn.textContent='Enviando...'; }
+                try {
+                    const evR = await fetch(`${SB_URL}/rest/v1/eventos?slug=eq.${SLUG}&select=id&limit=1`,{headers:SB_H});
+                    const [ev] = await evR.json();
+                    if (ev?.id){
+                        const r_inv = await fetch(`${SB_URL}/rest/v1/invitados`,{method:'POST',headers:{...SB_H,'Prefer':'return=representation'},
+                            body:JSON.stringify({evento_id:ev.id,nombre,pases_asignados:pases,pases_confirmados:pases,asiste,status:asiste?'confirmada':'declinada',mensaje:mensaje||null,fecha_confirmacion:new Date().toISOString()})});
+                        const [inv] = await r_inv.json();
+                        if (inv?.id && nombres.length) {
+                            await fetch(`${SB_URL}/rest/v1/acompanantes`,{method:'POST',headers:{...SB_H,'Prefer':'return=minimal'},
+                                body:JSON.stringify(nombres.map((n,i)=>({invitado_id:inv.id,nombre:n,orden:i})))});
+                        }
+                    }
+                } catch(err){}
+                form.style.display='none';
+                const succ = document.getElementById('successMessage');
+                if (succ){ succ.style.display='block'; succ.innerHTML = asiste ? `✓ Gracias ${nombre}! Confirmados ${pases} lugares.` : `✓ Gracias ${nombre} por avisarnos.`; }
+            });
+        }
+        if (document.readyState==='loading') document.addEventListener('DOMContentLoaded',attachHandler);
+        else attachHandler();
+    })();
+    </script>
 </body>
 </html>
